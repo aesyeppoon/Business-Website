@@ -13,8 +13,8 @@ import Icon from "../components/Icon.astro";
       <span class="eyebrow">Contact us</span>
       <h1>Tell us what you need help with.</h1>
       <p>
-        Share the job details and property location. Useful photos can be added
-        when your email opens.
+        Share the job details and property location. Your request will be sent
+        straight through so we can get back to you.
       </p>
     </div>
   </section>
@@ -46,14 +46,18 @@ import Icon from "../components/Icon.astro";
         </div>
       </div>
 
-      <form class="quote-form" id="quote-form">
+      <form class="quote-form" id="quote-form" action="/api/contact" method="post">
         <div class="form-heading">
           <span>Request a quote</span>
           <h2>Job details</h2>
-          <p>Complete the form and your email app will open with the details ready to send.</p>
+          <p>Complete the form and it will come straight through to Adaptive Electrical Solutions.</p>
         </div>
 
         <div class="form-grid">
+          <label class="form-honeypot" aria-hidden="true" tabindex="-1">
+            <span>Company</span>
+            <input type="text" name="company" autocomplete="off" tabindex="-1" />
+          </label>
           <label>
             <span>Name *</span>
             <input type="text" name="name" required autocomplete="name" />
@@ -90,10 +94,10 @@ import Icon from "../components/Icon.astro";
         </div>
 
         <button class="button button--primary" type="submit">
-          Prepare email <Icon name="arrow" />
+          Send request <Icon name="arrow" />
         </button>
         <p class="form-note" id="form-note" aria-live="polite">
-          No details are stored by this website.
+          Your details are only used to respond to this request.
         </p>
       </form>
     </div>
@@ -118,30 +122,51 @@ import Icon from "../components/Icon.astro";
 <script>
   const form = document.querySelector<HTMLFormElement>("#quote-form");
   const note = document.querySelector<HTMLElement>("#form-note");
+  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
 
-  form?.addEventListener("submit", (event) => {
+  const setNote = (message: string, tone = "") => {
+    if (!note) return;
+    note.textContent = message;
+    note.dataset.tone = tone;
+  };
+
+  form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (!form.reportValidity()) return;
 
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "");
-    const subject = `Quote request from ${name} - ${String(data.get("location") ?? "")}`;
-    const body = [
-      `Name: ${name}`,
-      `Phone: ${String(data.get("phone") ?? "")}`,
-      `Email: ${String(data.get("email") ?? "")}`,
-      `Property location: ${String(data.get("location") ?? "")}`,
-      `Type of work: ${String(data.get("service") ?? "")}`,
-      "",
-      "Job details:",
-      String(data.get("message") ?? ""),
-      "",
-      "Photos can be attached to this email before sending.",
-    ].join("\n");
+    const payload = Object.fromEntries(data.entries());
 
-    if (note) note.textContent = "Opening your email app with the quote details...";
-    window.location.href = `mailto:aes.yeppoon@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setNote("Sending your request...");
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => ({
+        ok: false,
+        message: "Something went wrong. Please call 0402 139 169.",
+      }));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "The request could not be sent.");
+      }
+
+      form.reset();
+      setNote(result.message, "success");
+    } catch (error) {
+      setNote(error instanceof Error ? error.message : "Something went wrong. Please call 0402 139 169.", "error");
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 </script>
 
@@ -231,6 +256,14 @@ import Icon from "../components/Icon.astro";
     margin-bottom: 28px;
   }
 
+  .form-honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   label {
     display: grid;
     gap: 8px;
@@ -282,11 +315,24 @@ import Icon from "../components/Icon.astro";
     cursor: pointer;
   }
 
+  .quote-form .button:disabled {
+    cursor: wait;
+    opacity: 0.68;
+  }
+
   .form-note {
     margin: 14px 0 0;
     color: #939a9d;
     font-size: 0.8rem;
     text-align: center;
+  }
+
+  .form-note[data-tone="success"] {
+    color: var(--cyan);
+  }
+
+  .form-note[data-tone="error"] {
+    color: #f8c533;
   }
 
   .contact-note__grid {

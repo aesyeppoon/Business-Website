@@ -15,10 +15,19 @@ npm run dev
 npm run build
 ```
 
-Cloudflare Pages settings:
+Cloudflare settings:
 
 - Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
 - Build output directory: `dist`
 - Node.js version: `22`
 
-The contact form opens a pre-filled email in the visitor's email application. For direct form delivery later, replace the small client-side handler in `src/pages/contact.astro` with a Cloudflare Pages Function and email provider.
+## Contact form
+
+The quote form posts to `/api/contact` and sends through Resend from the Cloudflare Worker.
+
+Set these Cloudflare environment variables before going live:
+
+- `RESEND_API_KEY` - secret Resend API key.
+- `CONTACT_TO_EMAIL` - destination inbox, defaults to `aes.yeppoon@gmail.com`.
+- `RESEND_FROM_EMAIL` - verified Resend sender, defaults to `Adaptive Electrical Solutions <noreply@adaptive-electrical.com.au>`.
