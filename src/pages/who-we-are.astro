@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CTA from "../components/CTA.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<BaseLayout
+  title="Who We Are | Adaptive Electrical Solutions"
+  description="Learn about Adaptive Electrical Solutions, a locally owned electrical business serving Yeppoon, Rockhampton and Central Queensland."
+>
+  <section class="page-hero">
+    <div class="page-hero__bolt"></div>
+    <div class="container">
+      <span class="eyebrow">Who we are</span>
+      <h1>Local knowledge. Clear communication. Neat work.</h1>
+      <p>
+        A locally owned electrical business helping homeowners, rental
+        properties, real estate agencies and renovators across Central Queensland.
+      </p>
+    </div>
+  </section>
+
+  <section class="story section">
+    <div class="container story__grid">
+      <div>
+        <span class="eyebrow">Adaptive Electrical Solutions</span>
+        <h2>Electrical support built around practical outcomes.</h2>
+      </div>
+      <div class="story__copy">
+        <p>
+          Adaptive Electrical Solutions services Yeppoon, Rockhampton and the
+          surrounding Central Queensland area. We carry out domestic, real
+          estate, commercial and light industrial electrical maintenance,
+          repairs, upgrades and installations.
+        </p>
+        <p>
+          The approach is simple: understand the issue properly, communicate the
+          options clearly and complete the work in a safe, compliant and tidy way.
+          That applies whether the job is a faulty power point, a switchboard
+          upgrade, a split system installation or a renovation fit-off.
+        </p>
+        <p>
+          We value long-term trust over short-term sales pressure. Customers
+          should understand what is being done, why it is needed and what to
+          expect next.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="values section section--soft">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">What guides the work</span>
+        <h2>Four standards we bring to every job.</h2>
+      </div>
+      <div class="grid-2">
+        <article class="value-card">
+          <span>01</span>
+          <h3>Safe</h3>
+          <p>Compliance-led work, careful testing and dependable outcomes.</p>
+        </article>
+        <article class="value-card">
+          <span>02</span>
+          <h3>Practical</h3>
+          <p>Clear recommendations that suit the property, the problem and the job.</p>
+        </article>
+        <article class="value-card">
+          <span>03</span>
+          <h3>Responsive</h3>
+          <p>Straightforward communication and reliable follow-through.</p>
+        </article>
+        <article class="value-card">
+          <span>04</span>
+          <h3>Neat</h3>
+          <p>Respectful work practices and tidy, considered finishes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="promise section section--dark">
+    <div class="container promise__grid">
+      <div>
+        <span class="eyebrow">Our promise</span>
+        <h2>Clear communication. Neat workmanship.</h2>
+        <p>
+          Electrical solutions designed to work properly and stand up over time.
+        </p>
+      </div>
+      <ul class="check-list">
+        <li><Icon name="check" /><span>Residential and rental property experience</span></li>
+        <li><Icon name="check" /><span>Service across Yeppoon and Rockhampton</span></li>
+        <li><Icon name="check" /><span>Electrical Licence 92589</span></li>
+        <li><Icon name="check" /><span>ARCtick Licence L209923</span></li>
+        <li><Icon name="check" /><span>ABN 45 660 857 189</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .story__grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(55px, 10vw, 145px);
+  }
+
+  .story__copy p {
+    font-size: 1.1rem;
+  }
+
+  .value-card {
+    position: relative;
+    min-height: 235px;
+    padding: 42px;
+    border-left: 8px solid var(--cyan);
+    background: var(--white);
+  }
+
+  .value-card:nth-child(1),
+  .value-card:nth-child(4) {
+    border-color: var(--yellow);
+  }
+
+  .value-card > span {
+    position: absolute;
+    top: 30px;
+    right: 32px;
+    color: #c5cacc;
+    font-family: var(--display);
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  .value-card h3 {
+    margin-top: 42px;
+    font-size: 1.65rem;
+    text-transform: uppercase;
+  }
+
+  .value-card p {
+    max-width: 470px;
+    margin-bottom: 0;
+  }
+
+  .promise__grid {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(55px, 10vw, 140px);
+  }
+
+  .promise p {
+    max-width: 620px;
+    color: #c8ccce;
+    font-size: 1.25rem;
+  }
+
+  .promise .check-list {
+    padding: 35px;
+    border: 1px solid #4b5053;
+  }
+
+  .promise .check-list li {
+    color: #d9dcdd;
+  }
+
+  .promise .check-list svg {
+    color: var(--yellow);
+  }
+
+  @media (max-width: 800px) {
+    .story__grid,
+    .promise__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

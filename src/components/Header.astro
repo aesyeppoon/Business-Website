@@ -1,0 +1,217 @@
+---
+import Icon from "./Icon.astro";
+
+const pathname = Astro.url.pathname;
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/services/", label: "Services" },
+  { href: "/who-we-are/", label: "Who we are" },
+  { href: "/contact/", label: "Contact" },
+];
+---
+
+<header class="site-header">
+  <div class="top-stripe"></div>
+  <div class="container nav-wrap">
+    <a class="brand" href="/" aria-label="Adaptive Electrical Solutions home">
+      <img src="/images/aes-logo-horizontal-reverse.png" alt="Adaptive Electrical Solutions" />
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Open navigation</span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={pathname === link.href ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a class="button button--primary nav-cta" href="/contact/" data-quote-transition>
+        Request a quote <Icon name="arrow" />
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>(".menu-button");
+  const nav = document.querySelector<HTMLElement>(".site-nav");
+
+  button?.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!open));
+    nav?.classList.toggle("is-open", !open);
+    document.body.classList.toggle("menu-open", !open);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    color: var(--white);
+    background: rgb(32 34 37 / 97%);
+    backdrop-filter: blur(12px);
+  }
+
+  .top-stripe {
+    height: 7px;
+    background: var(--yellow);
+  }
+
+  .nav-wrap {
+    display: flex;
+    min-height: 92px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+  }
+
+  .brand {
+    display: block;
+    width: 250px;
+    text-decoration: none;
+  }
+
+  .brand img {
+    width: 100%;
+    max-height: 56px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .site-nav > a:not(.button) {
+    position: relative;
+    padding: 12px 0;
+    font-family: var(--display);
+    font-size: 0.71rem;
+    font-weight: 750;
+    letter-spacing: 0.025em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .site-nav > a:not(.button)::after {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    left: 0;
+    height: 3px;
+    background: var(--yellow);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 160ms ease;
+  }
+
+  .site-nav > a:hover::after,
+  .site-nav > a[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-cta {
+    min-height: 46px;
+    padding: 10px 17px;
+  }
+
+  .menu-button {
+    display: none;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border: 1px solid #4c5154;
+    border-radius: 5px;
+    color: var(--white);
+    background: transparent;
+  }
+
+  .menu-button span:not(.sr-only) {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: 5px 0;
+    background: currentColor;
+  }
+
+  .sr-only {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 980px) {
+    .brand {
+      width: 210px;
+    }
+
+    .menu-button {
+      display: block;
+    }
+
+    .site-nav {
+      position: fixed;
+      inset: 99px 0 auto;
+      display: none;
+      min-height: calc(100vh - 99px);
+      align-items: stretch;
+      padding: 42px 20px;
+      background: var(--ink);
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .site-nav.is-open {
+      display: flex;
+    }
+
+    .site-nav > a:not(.button) {
+      padding: 18px 4px;
+      border-bottom: 1px solid #3d4144;
+      font-size: 1rem;
+    }
+
+    .site-nav > a:not(.button)::after {
+      display: none;
+    }
+
+    .nav-cta {
+      margin-top: 24px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .nav-wrap {
+      min-height: 82px;
+    }
+
+    .brand {
+      width: 175px;
+    }
+
+    .site-nav {
+      inset-block-start: 89px;
+      min-height: calc(100vh - 89px);
+    }
+  }
+</style>

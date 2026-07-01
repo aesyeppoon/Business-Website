@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<BaseLayout
+  title="Page Not Found | Adaptive Electrical Solutions"
+  description="The page you requested could not be found."
+>
+  <section class="not-found page-hero">
+    <div class="page-hero__bolt"></div>
+    <div class="container">
+      <span class="eyebrow">404 | Page not found</span>
+      <h1>This circuit does not lead anywhere.</h1>
+      <p>The page may have moved. Head back home or contact us for electrical assistance.</p>
+      <a class="button button--primary" href="/">Return home <Icon name="arrow" /></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 70vh;
+  }
+
+  .not-found .button {
+    margin-top: 34px;
+  }
+</style>

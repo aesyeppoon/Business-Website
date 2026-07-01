@@ -1,0 +1,23 @@
+{
+  "name": "adaptive-electrical-solutions",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.7",
+    "@fontsource-variable/montserrat": "^5.2.8",
+    "@fontsource-variable/source-sans-3": "^5.2.8",
+    "astro": "^5.16.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}

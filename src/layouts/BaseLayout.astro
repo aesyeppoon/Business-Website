@@ -1,0 +1,55 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageLightTransition from "../components/react/PageLightTransition.jsx";
+import montserratLatin from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
+import sourceSansLatin from "@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2?url";
+import "../styles/global.css";
+import "../components/react/react-islands.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#202225" />
+    <link rel="preload" href={montserratLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sourceSansLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/png" href="/images/aes-mark-reverse.png" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/images/electrical-tools-header.jpg", Astro.site)} />
+    <script is:inline>
+      const navigation = performance.getEntriesByType("navigation")[0];
+      if (navigation?.type === "reload") {
+        sessionStorage.removeItem("aes-hero-light-complete");
+        sessionStorage.removeItem("aes-quote-transition-used");
+      }
+      if (sessionStorage.getItem("aes-hero-light-complete") === "1") {
+        document.documentElement.classList.add("aes-hero-light-complete");
+      }
+    </script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <PageLightTransition client:load />
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,275 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CTA from "../components/CTA.astro";
+import Icon from "../components/Icon.astro";
+import ScrollRevealController from "../components/react/ScrollRevealController.jsx";
+
+const serviceGroups = [
+  {
+    number: "01",
+    icon: "wrench",
+    title: "Maintenance, repairs & fault finding",
+    intro: "Careful testing to find the cause of an electrical issue and put the right repair in place.",
+    items: [
+      "Tripping circuits and intermittent electrical faults",
+      "Faulty power points, switches and dimmers",
+      "Lighting faults and damaged light fittings",
+      "Appliance supply and dedicated circuit issues",
+      "General domestic and rental-property maintenance",
+    ],
+  },
+  {
+    number: "02",
+    icon: "fan",
+    title: "Fixtures, fans & everyday installations",
+    intro: "Neat replacement and installation work for the electrical items used throughout your property.",
+    items: [
+      "Power points and light switches",
+      "Ceiling fans and exhaust fans",
+      "Indoor and outdoor light fittings",
+      "Dimmers and practical lighting upgrades",
+      "New circuits for general power requirements",
+    ],
+  },
+  {
+    number: "03",
+    icon: "board",
+    title: "Switchboards, RCDs & smoke alarms",
+    intro: "Safety-focused upgrades and maintenance for circuit protection and essential property compliance.",
+    items: [
+      "Switchboard upgrades and maintenance",
+      "RCD safety switch installation",
+      "Circuit protection upgrades",
+      "Smoke alarm installation and replacement",
+      "Testing to suit current Queensland requirements",
+    ],
+  },
+  {
+    number: "04",
+    icon: "snow",
+    title: "Split system air conditioning",
+    intro: "Split system installation and replacement with the required electrical supply and isolation work.",
+    items: [
+      "New split system installations",
+      "Replacement of existing split systems",
+      "Dedicated electrical supply circuits",
+      "Compliant air conditioning isolation",
+      "Practical advice on installation locations",
+    ],
+  },
+  {
+    number: "05",
+    icon: "home",
+    title: "Renovations & new circuits",
+    intro: "Electrical rough-ins and fit-offs coordinated with small renovation projects and property upgrades.",
+    items: [
+      "Kitchen, laundry and bedroom renovations",
+      "Whole-house rough-ins and fit-offs",
+      "Oven and cooktop circuits",
+      "Air conditioner and laundry circuits",
+      "Power and lighting layout upgrades",
+    ],
+  },
+  {
+    number: "06",
+    icon: "bolt",
+    title: "Sheds, sub-boards & underground supply",
+    intro: "Practical power solutions for sheds, pumps and detached areas around the property.",
+    items: [
+      "Shed wiring and lighting",
+      "Sub-board installation",
+      "Underground conduit runs",
+      "Submain cabling",
+      "Circuits for pumps and equipment",
+    ],
+  },
+  {
+    number: "07",
+    icon: "factory",
+    title: "Commercial & light industrial",
+    intro: "Responsive maintenance and practical electrical upgrades for small workplaces, tenancies, workshops and light industrial sites.",
+    items: [
+      "Commercial maintenance and fault finding",
+      "Power and lighting upgrades",
+      "Workshop and equipment circuits",
+      "Distribution and sub-board work",
+      "Planned repairs and practical site improvements",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Electrical Services | Adaptive Electrical Solutions"
+  description="Domestic, rental property and renovation electrical services across Yeppoon, Rockhampton and Central Queensland."
+>
+  <section class="page-hero">
+    <div class="page-hero__bolt"></div>
+    <div class="container">
+      <span class="eyebrow">Electrical services</span>
+      <h1>Practical help for the work your property needs.</h1>
+      <p>
+        From fault finding and everyday repairs to switchboard upgrades, air
+        conditioning, renovations, commercial maintenance and shed wiring.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ScrollRevealController client:load />
+      <div class="services-list">
+        {
+          serviceGroups.map((service) => (
+            <article class="service-row" data-service-row>
+              <div class="service-row__heading">
+                <span class="service-row__number">{service.number}</span>
+                <span class="icon-box"><Icon name={service.icon} /></span>
+                <h2>{service.title}</h2>
+                <p>{service.intro}</p>
+              </div>
+              <ul class="check-list">
+                {service.items.map((item) => (
+                  <li><Icon name="check" /><span>{item}</span></li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="service-area section section--soft">
+    <div class="container service-area__grid">
+      <div>
+        <span class="eyebrow">Who we work with</span>
+        <h2>Residential and real estate electrical support.</h2>
+      </div>
+      <div class="grid-2">
+        <div class="mini-card">
+          <h3>Homeowners</h3>
+          <p>Repairs, upgrades, installations and practical improvements for your home.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Rental properties</h3>
+          <p>Clear communication and reliable maintenance for owners and property managers.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Real estate agencies</h3>
+          <p>Responsive electrical support with straightforward job updates.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Small renovations</h3>
+          <p>Coordinated rough-in and fit-off work for practical residential projects.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Commercial premises</h3>
+          <p>Maintenance, power, lighting and upgrade work for small businesses and tenancies.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Light industrial sites</h3>
+          <p>Practical fault finding, sub-boards and circuits for workshops and equipment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Not sure which service you need?"
+    body="Describe the issue or project and we will help identify the most useful next step."
+  />
+</BaseLayout>
+
+<style>
+  .services-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .service-row {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: clamp(50px, 9vw, 130px);
+    padding-block: clamp(55px, 8vw, 90px);
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 650ms ease, transform 650ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  .service-row.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-row:nth-child(even) .icon-box {
+    background: var(--cyan);
+  }
+
+  .service-row:nth-child(3n) {
+    background: linear-gradient(90deg, transparent, rgb(53 194 213 / 5%), transparent);
+  }
+
+  .service-row__heading {
+    position: relative;
+  }
+
+  .service-row__number {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: #c7ccce;
+    font-family: var(--display);
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .service-row h2 {
+    max-width: 680px;
+    margin-bottom: 22px;
+    font-size: clamp(2rem, 3.4vw, 3.3rem);
+  }
+
+  .service-row__heading p {
+    max-width: 630px;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+  }
+
+  .service-row .check-list {
+    align-self: center;
+  }
+
+  .service-area__grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(55px, 9vw, 120px);
+  }
+
+  .mini-card {
+    min-height: 190px;
+    padding: 28px;
+    border-top: 6px solid var(--yellow);
+    background: var(--white);
+  }
+
+  .mini-card p {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 800px) {
+    .service-row,
+    .service-area__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-row {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  title?: string;
+  body?: string;
+}
+
+const {
+  title = "Need an electrician you can rely on?",
+  body = "Tell us what is happening at your property and we will help you work out the practical next step.",
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <div>
+      <span class="eyebrow">Ready when you are</span>
+      <h2>{title}</h2>
+      <p>{body}</p>
+    </div>
+    <a class="button button--primary" href="/contact/" data-quote-transition>
+      Request a quote <Icon name="arrow" />
+    </a>
+  </div>
+</section>
