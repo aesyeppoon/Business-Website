@@ -11,3 +11,10 @@ brand-guide/.deps/
 brand-guide/edge-profile/
 brand-guide/edge-profile-qa/
 brand-guide/qa/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
