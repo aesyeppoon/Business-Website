@@ -14,6 +14,80 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "Electrician"],
+  "@id": new URL("/#business", Astro.site).toString(),
+  name: "Adaptive Electrical Solutions",
+  legalName: "Adaptive Electrical Solutions PTY LTD",
+  url: new URL("/", Astro.site).toString(),
+  logo: new URL("/images/aes-logo-horizontal.png", Astro.site).toString(),
+  image: new URL("/images/electrical-tools-header.jpg", Astro.site).toString(),
+  telephone: "+61402139169",
+  email: "aes.yeppoon@gmail.com",
+  priceRange: "$$",
+  areaServed: [
+    { "@type": "City", name: "Yeppoon" },
+    { "@type": "City", name: "Rockhampton" },
+    { "@type": "AdministrativeArea", name: "Central Queensland" },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Yeppoon",
+    addressRegion: "QLD",
+    addressCountry: "AU",
+  },
+  sameAs: ["https://www.facebook.com/profile.php?id=61575010021235"],
+  knowsAbout: [
+    "Electrical maintenance",
+    "Electrical fault finding",
+    "Switchboard upgrades",
+    "RCD safety switches",
+    "Smoke alarms",
+    "Split system air conditioning",
+    "Renovation electrical work",
+    "Commercial electrical maintenance",
+    "Light industrial electrical work",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Electrical services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Electrical maintenance and fault finding",
+          areaServed: "Yeppoon, Rockhampton and Central Queensland",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Switchboard upgrades and safety switches",
+          areaServed: "Yeppoon, Rockhampton and Central Queensland",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Smoke alarm installation and replacement",
+          areaServed: "Yeppoon, Rockhampton and Central Queensland",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Split system air conditioning electrical work",
+          areaServed: "Yeppoon, Rockhampton and Central Queensland",
+        },
+      },
+    ],
+  },
+};
 ---
 
 <!doctype html>
@@ -22,6 +96,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#202225" />
     <link rel="preload" href={montserratLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={sourceSansLatin} as="font" type="font/woff2" crossorigin />
@@ -32,6 +107,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL("/images/electrical-tools-header.jpg", Astro.site)} />
+    <meta property="og:site_name" content="Adaptive Electrical Solutions" />
+    <meta property="og:locale" content="en_AU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL("/images/electrical-tools-header.jpg", Astro.site)} />
+    <meta name="geo.region" content="AU-QLD" />
+    <meta name="geo.placename" content="Yeppoon, Rockhampton" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RWTX29YDW0"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -50,6 +133,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         document.documentElement.classList.add("aes-hero-light-complete");
       }
     </script>
+    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
     <title>{title}</title>
   </head>
   <body>
